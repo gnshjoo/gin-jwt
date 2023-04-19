@@ -5,16 +5,18 @@ import (
 	"gorm.io/gorm"
 )
 
-func Database(dns string) *gorm.DB {
+const DNS = "root:root@tcp(127.0.0.1:3306)/springboot?charset=utf8mb4&parseTime=True&loc=Local"
+
+func ConnectDatabase() (*gorm.DB, *gorm.DB) {
 	var db *gorm.DB
-	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
 
 	err = db.AutoMigrate()
 	if err != nil {
-		return nil
+		return nil, nil
 	}
-	return db
+	return db, nil
 }

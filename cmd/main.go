@@ -10,8 +10,6 @@ import (
 	"net/http"
 )
 
-const dsn = "host=localhost user=root password=root dbname=sprintboot port=3306 "
-
 func setupSwagger(r *gin.Engine) {
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusFound, "swagger/index.html")
@@ -24,6 +22,7 @@ func main() {
 	r := gin.Default()
 	setupSwagger(r)
 	r.GET("/ping", routers.RequestPing)
+	r.POST("/signup", routers.SignUp)
 
 	err := r.Run()
 	if err != nil {
