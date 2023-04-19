@@ -28,6 +28,9 @@ func RequestPing(c *gin.Context) {
 // SignUp
 // @name create user
 // @summary
+// @Param name path string true "name"
+// @Param password path string true "password"
+// @Param email path string true "email"
 // @Description
 // @Accept json
 // @Produce json
@@ -46,5 +49,5 @@ func SignUp(c *gin.Context) {
 	}
 
 	result := Users.SignupUser(data)
-	log.Println(result)
+	c.JSON(200, gin.H{"message": result})
 }

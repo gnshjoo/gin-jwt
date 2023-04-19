@@ -18,6 +18,10 @@ func setupSwagger(r *gin.Engine) {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
 
+// @title Gin-JWT API
+// @version 0.0.1
+
+// @host localhost
 func main() {
 	r := gin.Default()
 	setupSwagger(r)

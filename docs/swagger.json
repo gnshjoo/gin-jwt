@@ -1,8 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "title": "Gin-JWT API",
+        "contact": {},
+        "version": "0.0.1"
     },
+    "host": "localhost",
     "paths": {
         "/ping": {
             "get": {
@@ -14,6 +17,47 @@
                     "application/json"
                 ],
                 "summary": "This is simple Summary",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/signup": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password",
+                        "name": "password",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "email",
+                        "name": "email",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

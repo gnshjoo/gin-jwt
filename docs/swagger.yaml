@@ -1,5 +1,8 @@
+host: localhost
 info:
   contact: {}
+  title: Gin-JWT API
+  version: 0.0.1
 paths:
   /ping:
     get:
@@ -14,4 +17,31 @@ paths:
           schema:
             type: string
       summary: This is simple Summary
+  /signup:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
 swagger: "2.0"
