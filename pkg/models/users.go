@@ -8,3 +8,8 @@ type User struct {
 	createdAt int32  `json:create_at`
 	updatedAt int32  `json:updated_at`
 }
+
+type UserLogin struct {
+	Email    string `json:email`
+	Password string `json:password`
+}

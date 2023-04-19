@@ -51,3 +51,26 @@ func SignUp(c *gin.Context) {
 	result := Users.SignupUser(data)
 	c.JSON(200, gin.H{"message": result})
 }
+
+// Login
+// @name login user
+// @summary
+// @Param password path string true "password"
+// @Param email path string true "email"
+// @Description
+// @Accept json
+// @Produce json
+// @Router /login [post]
+// @Success 200 {object} string
+func Login(c *gin.Context) {
+	body := c.Request.Body
+	var data models.UserLogin
+	err := json.NewDecoder(body).Decode(&data)
+	if err != nil {
+		log.Println(err)
+		c.JSON(500, gin.H{"message": err})
+	}
+
+	result := Users.LoginUser(data)
+	c.JSON(200, gin.H{"message": result})
+}

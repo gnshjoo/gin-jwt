@@ -27,6 +27,7 @@ func main() {
 	setupSwagger(r)
 	r.GET("/ping", routers.RequestPing)
 	r.POST("/signup", routers.SignUp)
+	r.POST("/login", routers.Login)
 
 	err := r.Run()
 	if err != nil {

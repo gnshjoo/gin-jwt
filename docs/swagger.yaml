@@ -4,6 +4,28 @@ info:
   title: Gin-JWT API
   version: 0.0.1
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: password
+        in: path
+        name: password
+        required: true
+        type: string
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
   /ping:
     get:
       consumes:
