@@ -7,7 +7,7 @@ import (
 
 const DNS = "root:root@tcp(127.0.0.1:3306)/springboot?charset=utf8mb4&parseTime=True&loc=Local"
 
-func ConnectDatabase() (*gorm.DB, *gorm.DB) {
+func ConnectDatabase() (*gorm.DB, error) {
 	var db *gorm.DB
 	db, err := gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {

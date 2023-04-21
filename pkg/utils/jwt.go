@@ -7,6 +7,7 @@ import (
 )
 
 type Token struct {
+	ID           string
 	AccessToken  string
 	RefreshToken string
 	AccessUuid   string
@@ -46,6 +47,10 @@ func GetJwtToken(userId int64) (*Token, error) {
 
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtClaims)
 	tk.RefreshToken, err = rt.SignedString(jwtKey)
+	if err != nil {
+		return nil, err
+	}
+
 	if err != nil {
 		return nil, err
 	}

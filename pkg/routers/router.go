@@ -48,7 +48,10 @@ func SignUp(c *gin.Context) {
 		log.Println(err)
 	}
 
-	result := Users.SignupUser(data)
+	result, err := Users.SignupUser(data)
+	if err != nil {
+		c.JSON(500, gin.H{"message": err})
+	}
 	c.JSON(200, gin.H{"message": result})
 }
 
