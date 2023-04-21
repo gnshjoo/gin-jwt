@@ -3,6 +3,7 @@ package Users
 import (
 	"gin-jwt/pkg/config"
 	"gin-jwt/pkg/models"
+	"gin-jwt/pkg/utils"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 )
@@ -22,7 +23,7 @@ func SignupUser(user models.User) int64 {
 	return result.RowsAffected
 }
 
-func LoginUser(data models.UserLogin) bool {
+func LoginUser(data models.UserLogin) (*utils.Token, error) {
 	db, err := config.ConnectDatabase()
 	if err != nil {
 		log.Println(err)
@@ -31,8 +32,13 @@ func LoginUser(data models.UserLogin) bool {
 	db.Table("Users").Where("email=?", data.Email).Find(&user)
 	passErr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.Password))
 	if passErr != nil {
-		return false
+		return nil, passErr
 	} else {
-		return true
+
+		token, err := utils.GetJwtToken(user.ID)
+		if err != nil {
+			return nil, err
+		}
+		return token, nil
 	}
 }

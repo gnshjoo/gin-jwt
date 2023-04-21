@@ -71,6 +71,10 @@ func Login(c *gin.Context) {
 		c.JSON(500, gin.H{"message": err})
 	}
 
-	result := Users.LoginUser(data)
-	c.JSON(200, gin.H{"message": result})
+	result, err := Users.LoginUser(data)
+	if err != nil {
+		log.Println(err)
+		c.JSON(500, gin.H{"message": "login Failed"})
+	}
+	c.JSON(200, gin.H{"accessToken": result.AccessToken, "refreshToken": result.RefreshToken})
 }
