@@ -28,6 +28,7 @@ func main() {
 	r.GET("/ping", routers.RequestPing)
 	r.POST("/signup", routers.SignUp)
 	r.POST("/login", routers.Login)
+	r.GET("/token/test", routers.ValidateTokenUrl)
 
 	err := r.Run()
 	if err != nil {

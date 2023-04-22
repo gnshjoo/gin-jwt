@@ -3,8 +3,10 @@ package routers
 import (
 	"encoding/json"
 	"fmt"
+	"gin-jwt/pkg/contorllers/TokenTest"
 	"gin-jwt/pkg/contorllers/Users"
 	"gin-jwt/pkg/models"
+	"gin-jwt/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"io"
 	"log"
@@ -80,4 +82,24 @@ func Login(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "login Failed"})
 	}
 	c.JSON(200, gin.H{"accessToken": result.AccessToken, "refreshToken": result.RefreshToken})
+}
+
+// ValidateTokenUrl
+// @Router /token/test
+func ValidateTokenUrl(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")
+	var unmarshalToken utils.Token
+	err := json.Unmarshal([]byte(token), &unmarshalToken)
+	if err != nil {
+		c.JSON(500, gin.H{"message": err})
+		return
+	}
+	tokenErr := TokenTest.TokenVerifyTest(unmarshalToken)
+	if tokenErr != nil {
+		c.JSON(500, gin.H{"message": tokenErr})
+		return
+	} else {
+		c.JSON(200, gin.H{"message": "success"})
+	}
+
 }

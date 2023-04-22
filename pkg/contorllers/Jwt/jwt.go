@@ -20,17 +20,25 @@ func SaveToken(token *utils.Token) error {
 	return nil
 }
 
-func GetToken(rtoken, atoken string) (utils.Token, error) {
+func FetchToken(token utils.Token) (bool, error) {
+	accessToken := token.AccessToken
+
 	db, err := config.ConnectDatabase()
 	if err != nil {
-		log.Println(err)
-		return utils.Token{}, err
+		return false, err
+	}
+	var savedToken utils.Token
+	db.Table("Tokens").Where("access_token = ?", accessToken).Scan(&savedToken)
+
+	_, err = utils.ValidToken(savedToken.AccessToken)
+	if err != nil {
+		return false, err
+	}
+	_, err = utils.ValidToken(savedToken.RefreshToken)
+	if err != nil {
+		return false, err
 	}
 
-	var token utils.Token
-	tk := db.Table("Tokens").Where("access_token=?", atoken).Where("refresh_token=?", rtoken).Find(&token)
-	if tk.Error != nil {
-		return utils.Token{}, err
-	}
-	return token, nil
+	return true, nil
+
 }
